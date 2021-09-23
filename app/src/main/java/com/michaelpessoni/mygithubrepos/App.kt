@@ -1,6 +1,7 @@
 package com.michaelpessoni.mygithubrepos
 
 import android.app.Application
+import com.michaelpessoni.mygithubrepos.data.di.DataModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
@@ -12,5 +13,6 @@ class App : Application() {
             androidContext(this@App)
         }
 
+        DataModule.load()
     }
 }
