@@ -2,6 +2,8 @@ package com.michaelpessoni.mygithubrepos.data.di
 
 import android.util.Log
 import com.google.gson.GsonBuilder
+import com.michaelpessoni.mygithubrepos.data.repositories.RepoRepository
+import com.michaelpessoni.mygithubrepos.data.repositories.RepoRepositoryImpl
 import com.michaelpessoni.mygithubrepos.data.services.GithubService
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -16,7 +18,7 @@ object DataModule {
     private const val OK_HTTP = "OkHttp"
 
     fun load() {
-        loadKoinModules(networkModules())
+        loadKoinModules(networkModules() + repositoriesModule() )
     }
 
     private fun networkModules() : Module {
@@ -38,6 +40,14 @@ object DataModule {
 
             single {
                 createService<GithubService>(get(), get())
+            }
+        }
+    }
+
+    private fun repositoriesModule(): Module {
+        return module {
+            single<RepoRepository> {
+                RepoRepositoryImpl(get())
             }
         }
     }
